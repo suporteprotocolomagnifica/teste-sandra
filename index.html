@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Teste da Barriga Inchada: descubra o seu nível de inflamação</title>
+<meta name="description" content="Responda 7 perguntas rápidas e descubra o seu nível de inflamação depois dos 40.">
+<meta property="og:title" content="Teste da Barriga Inchada">
+<meta property="og:description" content="Responda 7 perguntas rápidas e descubra o seu nível de inflamação depois dos 40.">
+<meta property="og:image" content="img/hero.jpg">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-K4XMHHPT');</script>
+<!-- Meta Pixel -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','851438198034678');fbq('track','PageView');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F7F3EE;--card:#FFFFFF;--ink:#231C17;--muted:#655A51;--line:#E7DED3;--accent:#9A5B13;--accent-soft:#F6EAD7;--cta:#16A34A;--warn:#B45309}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:520px;margin:0 auto;padding:20px 16px 48px}
+  .screen{display:none;animation:in .35s ease}
+  .screen.on{display:block}
+  @keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){.screen,.btn.cta{animation:none}}
+  #head{display:none;max-width:520px;margin:0 auto;padding:20px 16px 0}
+  #head.on{display:block}
+  #head.on + main .wrap{padding-top:0}
+  .count{display:block;color:var(--muted);font-size:13px;font-weight:600}
+  .bar{height:6px;background:var(--line);border-radius:99px;overflow:hidden;margin:4px 0 22px}
+  .bar span{display:block;height:100%;width:0;background:var(--accent);transition:width .35s ease}
+  .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;padding:6px 12px;border-radius:99px;margin-bottom:14px}
+  h1{font-size:28px;line-height:1.18;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+  h2{font-size:23px;line-height:1.22;font-weight:800;letter-spacing:-.01em;margin-bottom:6px}
+  .hint{color:var(--muted);font-size:15px;margin-bottom:18px}
+  h1.headline{font-size:30px;margin-bottom:16px}
+  h1.headline span{color:var(--accent)}
+  .hero-img{display:block;width:100%;height:auto;aspect-ratio:1272/832;object-fit:cover;border-radius:16px;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+  .pass img{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.1)}
+  .opts{display:flex;flex-direction:column;gap:10px}
+  .opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:16px;font:600 16px Inter,system-ui,sans-serif;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}
+  .opt:hover{border-color:#dcc2a0}
+  .opt:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .opt .box{flex:none;width:22px;height:22px;border-radius:50%;border:2px solid #cdbfae;display:flex;align-items:center;justify-content:center}
+  .multi .opt .box{border-radius:6px}
+  .opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+  .opt.sel .box{border-color:var(--accent);background:var(--accent)}
+  .opt.sel .box:after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px)}
+  .opts.pics{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .opt.pic{flex-direction:column;align-items:stretch;gap:0;padding:0;overflow:hidden;text-align:center}
+  .opt.pic img{display:block;width:100%;height:auto;aspect-ratio:1;object-fit:cover}
+  .opt.pic.wide{grid-column:span 2}
+  .opt.pic.wide img{aspect-ratio:2/1}
+  .opt.pic span{padding:12px 8px;font-size:15px}
+  .opt.pic.sel span{background:var(--accent);color:#fff}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:18px;font:800 18px Inter,system-ui,sans-serif;color:#fff;background:var(--accent);cursor:pointer;margin-top:18px;text-align:center;text-decoration:none;box-shadow:0 8px 20px rgba(154,91,19,.25)}
+  .btn:disabled{opacity:.35;box-shadow:none;cursor:default}
+  .btn.cta{background:var(--cta);box-shadow:0 10px 24px rgba(22,163,74,.3);animation:pulse 2s infinite}
+  @keyframes pulse{50%{transform:scale(1.02)}}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+  .loading{text-align:center;padding-top:40px}
+  .spinner{width:64px;height:64px;border-radius:50%;border:6px solid var(--line);border-top-color:var(--accent);margin:0 auto 24px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .steps{list-style:none;text-align:left;max-width:340px;margin:22px auto 0}
+  .steps li{padding:8px 0;color:var(--muted);opacity:.3;transition:opacity .3s}
+  .steps li.done{opacity:1;color:var(--ink)}
+  .steps li.done:before{content:"✓ ";color:var(--accent);font-weight:800}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin:18px 0}
+  .card h3{font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:12px}
+  .row{display:flex;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .row:first-of-type{border-top:0}
+  .row b{flex:none;width:118px;color:var(--muted);font-weight:600}
+  .meter{position:relative;height:14px;border-radius:99px;background:linear-gradient(90deg,#22c55e,#facc15,#ef4444);margin:8px 0 6px}
+  .meter i{position:absolute;top:-6px;width:26px;height:26px;border-radius:50%;background:#fff;border:4px solid var(--ink);transform:translateX(-50%);transition:left 1.2s ease}
+  .meter-l{display:flex;justify-content:space-between;font-size:12px;color:var(--muted)}
+  .explain{font-size:17px;margin:16px 0 26px}
+  .result h2{font-size:26px}
+  .result h2 em{font-style:normal;color:#DC2626}
+  .result .card{margin:16px 0 0}
+  .vsl h1{text-align:center;font-size:26px}
+  .vsl h1 em{font-style:normal;color:var(--accent)}
+  .sound{text-align:center;font-weight:700;font-size:14px;color:var(--warn);margin-bottom:10px}
+  .player{max-width:400px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.18);background:#000}
+  .player video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000}
+  .show-pitch{display:none}
+  .show-pitch.on{display:block;animation:in .45s ease}
+  .sales{margin-top:24px}
+  .seal{font-size:13px;color:var(--muted);text-align:center;margin-top:12px}
+  .offer{background:var(--card);border:2px solid var(--cta);border-radius:20px;padding:22px 18px;text-align:center;box-shadow:0 10px 30px rgba(22,163,74,.12)}
+  .offer h2{font-size:22px;margin-bottom:14px}
+  .checks{list-style:none;text-align:left;margin:0 auto 16px;max-width:360px}
+  .checks li{padding:7px 0 7px 28px;position:relative;font-size:15px;border-top:1px solid var(--line)}
+  .checks li:first-child{border-top:0}
+  .checks li:before{content:"✓";position:absolute;left:4px;color:var(--cta);font-weight:800}
+  .from{color:var(--muted);font-size:16px}
+  .price{font-size:52px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--ink)}
+  .once{font-size:14px;color:var(--muted);margin-top:4px}
+  h2.sec{font-size:23px;text-align:center;margin:40px 0 16px}
+  .deliv{display:flex;flex-direction:column;gap:10px}
+  .item{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px}
+  .item .ico{flex:none;width:44px;height:44px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;font-size:22px}
+  .item b{display:block;font-size:16px;margin-bottom:3px}
+  .item p{font-size:14px;color:var(--muted)}
+  .compare{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .row2{display:flex;justify-content:space-between;gap:12px;padding:13px 16px;border-top:1px solid var(--line);font-size:15px}
+  .row2:first-child{border-top:0}
+  .row2 b{text-align:right;color:#B91C1C}
+  .row2.us{background:var(--accent-soft)}
+  .row2.us b{color:var(--accent)}
+  .small{font-size:13px;color:var(--muted);margin-top:10px;text-align:center}
+  .lead2{text-align:center;color:var(--muted);margin:-6px 0 16px}
+  .press{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .press img{display:block;width:100%;height:auto;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.1)}
+  .science{margin-top:14px;background:var(--ink);color:#fff;border-radius:16px;padding:16px 18px;font-size:15px}
+  .science b{color:#F2C27B}
+  .science small{display:block;margin-top:6px;color:#bfb3a8;font-size:12px}
+  .guarantee{display:flex;gap:16px;align-items:center;margin-top:36px;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+  .guarantee .badge{flex:none;width:76px;height:76px;border-radius:50%;background:var(--cta);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:30px;font-weight:800;line-height:1;box-shadow:0 0 0 5px #dcfce7}
+  .guarantee .badge small{font-size:12px;font-weight:700;margin-top:2px}
+  .guarantee b{font-size:17px}
+  .guarantee p{font-size:14px;color:var(--muted);margin-top:4px}
+  .faq details{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;padding:0 16px}
+  .faq summary{cursor:pointer;font-weight:700;font-size:15px;padding:15px 0;list-style:none;position:relative;padding-right:24px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary:after{content:"+";position:absolute;right:0;top:12px;font-size:20px;color:var(--accent)}
+  .faq details[open] summary:after{content:"−"}
+  .faq p{font-size:14px;color:var(--muted);padding-bottom:15px}
+  .foot{font-size:12px;color:var(--muted);text-align:center;margin-top:28px}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K4XMHHPT" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div id="head"><span class="count" id="q-count"></span><div class="bar"><span id="q-bar"></span></div></div>
+<main>
+<!-- Perguntas: data-step = tela (q_ = pergunta, p_ = tela de passagem), data-label = resposta gravada -->
+<section class="screen on" data-step="q_sabia"><div class="wrap">
+  <h1 class="headline">Como desinchar a barriga depois dos 40 <span>comendo comida de verdade</span></h1>
+  <img class="hero-img" src="img/hero.jpg" alt="Sandra Guedes, 52 anos" width="1100" height="719">
+  <h2>Você sabia que a barriga inchada depois dos 40 pode ser inflamação, e não idade?</h2>
+  <p class="hint">Responda 7 perguntas rápidas e descubra o seu nível de inflamação.</p>
+  <div class="opts">
+    <button class="opt" data-label="Não, nunca tinha ouvido isso"><span class="box"></span>Não, nunca tinha ouvido isso</button>
+    <button class="opt" data-label="Já ouvi, mas não sei o que fazer"><span class="box"></span>Já ouvi, mas não sei o que fazer</button>
+  </div>
+</div></section>
+
+<section class="screen" data-step="q_freq"><div class="wrap">
+  <h2>Com que frequência a sua barriga fica estufada?</h2>
+  <p class="hint">Toque na resposta.</p>
+  <div class="opts">
+    <button class="opt" data-label="Quase todo dia"><span class="box"></span>Quase todo dia</button>
+    <button class="opt" data-label="Algumas vezes por semana"><span class="box"></span>Algumas vezes por semana</button>
+    <button class="opt" data-label="Só depois de certas comidas"><span class="box"></span>Só depois de certas comidas</button>
+    <button class="opt" data-label="Raramente"><span class="box"></span>Raramente</button>
+  </div>
+</div></section>
+
+<section class="screen" data-step="q_corpo"><div class="wrap">
+  <h2>Onde mais você sente no corpo?</h2>
+  <p class="hint">Pode marcar mais de uma.</p>
+  <div class="opts multi">
+    <button class="opt" data-label="Rosto inchado ao acordar"><span class="box"></span>Rosto inchado ao acordar</button>
+    <button class="opt" data-label="Calça apertando no fim do dia"><span class="box"></span>Calça apertando no fim do dia</button>
+    <button class="opt" data-label="Cansaço depois de comer"><span class="box"></span>Cansaço depois de comer</button>
+    <button class="opt" data-label="Vontade de doce à tarde"><span class="box"></span>Vontade de doce à tarde</button>
+    <button class="opt" data-label="Sono leve ou ruim"><span class="box"></span>Sono leve ou ruim</button>
+    <button class="opt" data-label="Mãos e pés inchados"><span class="box"></span>Mãos e pés inchados</button>
+  </div>
+  <button class="btn next" disabled>Continuar</button>
+</div></section>
+
+<section class="screen pass" data-step="p_sandra"><div class="wrap">
+  <img src="img/p_sandra.jpg" alt="Tenho 52 anos: sem caneta, sem botox e sem passar fome" width="800" height="1000">
+  <button class="btn">Continuar</button>
+</div></section>
+
+<section class="screen" data-step="q_cafe"><div class="wrap">
+  <h2>Qual destes cafés da manhã é mais parecido com o seu?</h2>
+  <p class="hint">Toque na foto.</p>
+  <div class="opts pics">
+    <button class="opt pic" data-label="Pão com café"><img src="img/cafe_pao.jpg" alt="" width="480" height="480"><span>Pão com café</span></button>
+    <button class="opt pic" data-label="Tapioca ou cuscuz"><img src="img/cafe_tapioca.jpg" alt="" width="480" height="480"><span>Tapioca ou cuscuz</span></button>
+    <button class="opt pic" data-label="Fruta e suco"><img src="img/cafe_fruta.jpg" alt="" width="480" height="480"><span>Fruta e suco</span></button>
+    <button class="opt pic" data-label="Só um cafezinho"><img src="img/cafe_so_cafe.jpg" alt="" width="480" height="480"><span>Só um cafezinho</span></button>
+    <button class="opt pic wide" data-label="Ovos e proteína"><img src="img/cafe_proteina.jpg" alt="" width="960" height="480"><span>Ovos e proteína</span></button>
+  </div>
+</div></section>
+
+<section class="screen" data-step="q_tentou"><div class="wrap">
+  <h2>O que você já tentou pra desinchar ou emagrecer?</h2>
+  <p class="hint">Pode marcar mais de uma.</p>
+  <div class="opts multi">
+    <button class="opt" data-label="Jejum"><span class="box"></span>Jejum</button>
+    <button class="opt" data-label="Dieta da sopa ou shake pronto"><span class="box"></span>Dieta da sopa ou shake pronto</button>
+    <button class="opt" data-label="Academia"><span class="box"></span>Academia</button>
+    <button class="opt" data-label="Chás"><span class="box"></span>Chás</button>
+    <button class="opt" data-label="Caneta"><span class="box"></span>Caneta</button>
+    <button class="opt" data-label="Nutricionista"><span class="box"></span>Nutricionista</button>
+    <button class="opt" data-label="Nada ainda"><span class="box"></span>Nada ainda</button>
+  </div>
+  <button class="btn next" disabled>Continuar</button>
+</div></section>
+
+<section class="screen pass" data-step="p_diploma"><div class="wrap">
+  <img src="img/p_diploma.jpg" alt="Sandra Guedes diplomada pelo Dr. Jaime Brugos, criador da Isodieta" width="800" height="1000">
+  <button class="btn">Continuar</button>
+</div></section>
+
+<section class="screen" data-step="q_efeito"><div class="wrap">
+  <h2>E quando você faz dieta, o que acontece?</h2>
+  <p class="hint">Toque na resposta.</p>
+  <div class="opts">
+    <button class="opt" data-label="Perco e volta tudo"><span class="box"></span>Perco e volta tudo</button>
+    <button class="opt" data-label="Passo fome e desisto"><span class="box"></span>Passo fome e desisto</button>
+    <button class="opt" data-label="Não perco nada"><span class="box"></span>Não perco nada</button>
+    <button class="opt" data-label="Funciona bem"><span class="box"></span>Funciona bem</button>
+  </div>
+</div></section>
+
+<section class="screen" data-step="q_idade"><div class="wrap">
+  <h2>Qual é a sua idade?</h2>
+  <p class="hint">Toque na resposta.</p>
+  <div class="opts">
+    <button class="opt" data-label="35 a 39"><span class="box"></span>35 a 39</button>
+    <button class="opt" data-label="40 a 49"><span class="box"></span>40 a 49</button>
+    <button class="opt" data-label="50 a 59"><span class="box"></span>50 a 59</button>
+    <button class="opt" data-label="60 ou mais"><span class="box"></span>60 ou mais</button>
+  </div>
+</div></section>
+
+<section class="screen" data-step="carregando"><div class="wrap loading">
+  <div class="spinner"></div>
+  <h2>Montando o seu resultado...</h2>
+  <ul class="steps">
+    <li>Lendo onde o inchaço aparece no seu corpo</li>
+    <li>Cruzando com o seu café da manhã e o que você já tentou</li>
+    <li>Separando o que comer e o que cortar</li>
+  </ul>
+</div></section>
+
+<section class="screen" data-step="resultado"><div class="wrap result">
+  <span class="tag">Seu resultado</span>
+  <h2 id="r-title"></h2>
+  <div class="card">
+    <div class="meter"><i id="r-dot" style="left:0"></i></div>
+    <div class="meter-l"><span>Leve</span><span>Moderada</span><span>Alta</span></div>
+  </div>
+  <div class="card">
+    <h3>O que o teste mostrou</h3>
+    <div class="row"><b>Barriga estufada</b><span id="r-freq"></span></div>
+    <div class="row"><b>Sinais no corpo</b><span id="r-corpo"></span></div>
+    <div class="row"><b>Café da manhã</b><span id="r-cafe"></span></div>
+    <div class="row"><b>Já tentou</b><span id="r-tentou"></span></div>
+  </div>
+  <p class="explain" id="r-explain"></p>
+  <button class="btn cta" id="unlock">Continuar</button>
+  <p class="note">Este teste não é diagnóstico médico.</p>
+</div></section>
+
+<!-- MODO GRUPO (até 10/11): vídeo da Sandra e o botão do grupo do Desafio gratuito -->
+<section class="screen vsl" data-step="grupo"><div class="wrap">
+  <h1>Assista ao vídeo e entre no <em>Desafio Desinflamação gratuito</em></h1>
+  <p class="sound">🔊 Confira se o som está ligado</p>
+  <div class="player"><video id="v-grupo" src="video/grupo.mp4" poster="img/poster_grupo.jpg" playsinline controls preload="metadata"></video></div>
+  <div class="show-pitch" id="pitch-grupo">
+    <div class="sales">
+      <div class="offer">
+        <span class="tag">Gratuito · online</span>
+        <h2>Desafio Desinflamação: 7 dias comigo</h2>
+        <ul class="checks">
+          <li>Uma aula por dia, às 7h, no grupo do WhatsApp</li>
+          <li>O cardápio de cada dia, com comida de verdade</li>
+          <li>5 refeições por dia, sem passar fome</li>
+          <li>As aulas ficam no grupo: dá pra assistir a que você perdeu</li>
+        </ul>
+        <a class="btn cta" id="cta-grupo" href="#">Entrar no grupo do Desafio</a>
+        <p class="seal">🔒 Este é o único link oficial · Nunca pedimos pagamento pelo Desafio</p>
+      </div>
+      <p class="small">Você pode eliminar até 4kg em 7 dias*. *Resultado varia de corpo pra corpo. Não substitui acompanhamento médico.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- MODO CARTILHA (a partir de 11/11): vídeo de venda (quando houver) e a oferta -->
+<section class="screen vsl" data-step="cartilha"><div class="wrap">
+  <h1>Assista ao vídeo e veja <em>o que comer e o que cortar</em> pra desinchar</h1>
+  <p class="sound" id="som-cartilha">🔊 Confira se o som está ligado</p>
+  <div class="player" id="player-cartilha"><video id="v-cartilha" playsinline controls preload="metadata"></video></div>
+  <div class="show-pitch" id="pitch-cartilha">
+    <div class="sales">
+      <div class="offer" id="oferta">
+        <span class="tag">Acesso na hora</span>
+        <h2>Barriga Desinchada Depois dos 40: o que comer e o que cortar</h2>
+        <ul class="checks">
+          <li>O que tirar do prato pra parar de inchar</li>
+          <li>O que colocar no lugar, com comida de verdade</li>
+          <li>Como montar as 5 refeições do dia sem passar fome</li>
+          <li>Pra ler no celular, no seu ritmo</li>
+        </ul>
+        <p class="from">de <s>R$ 97</s> por</p>
+        <p class="price">R$ 47</p>
+        <p class="once">pagamento único · sem mensalidade</p>
+        <a class="btn cta checkout" href="#">Quero a minha cartilha</a>
+        <p class="seal">🔒 Compra segura · Acesso enviado no seu e-mail · Garantia de 7 dias</p>
+      </div>
+
+      <h2 class="sec">O que você recebe</h2>
+      <div class="deliv">
+        <div class="item"><span class="ico">🍳</span><div><b>O que comer</b><p>Os alimentos que desincham e dão energia, do café da manhã ao jantar.</p></div></div>
+        <div class="item"><span class="ico">✂️</span><div><b>O que cortar</b><p>O que inflama sem você perceber, mesmo quando parece saudável.</p></div></div>
+        <div class="item"><span class="ico">⏰</span><div><b>5 refeições por dia</b><p>Como organizar o dia pra não passar fome e não beliscar à tarde.</p></div></div>
+      </div>
+      <p class="small">No checkout você também pode levar o cardápio personalizado para mulheres 40+ com a lista de compras.</p>
+
+      <h2 class="sec">Quanto custa continuar tentando de outro jeito</h2>
+      <div class="compare">
+        <div class="row2"><span>Uma consulta particular</span><b>mais de R$ 100, por sessão</b></div>
+        <div class="row2"><span>Chás e suplementos</span><b>compra que nunca acaba</b></div>
+        <div class="row2"><span>Dieta da moda</span><b>o peso volta</b></div>
+        <div class="row2 us"><span>Cartilha Barriga Desinchada</span><b>R$ 47, uma vez só</b></div>
+      </div>
+      <p class="small">A cartilha não substitui acompanhamento médico. Ela soma ao que você já faz, pelo prato.</p>
+
+      <h2 class="sec">Quem vai te ensinar</h2>
+      <p class="lead2">Sandra Guedes, 52 anos, diplomada pelo criador da Isodieta.</p>
+      <div class="press">
+        <img src="img/p_sandra.jpg" alt="Sandra Guedes, 52 anos" width="800" height="1000" loading="lazy">
+        <img src="img/p_diploma.jpg" alt="Diploma da Isodieta com o Dr. Jaime Brugos" width="800" height="1000" loading="lazy">
+      </div>
+      <div class="science"><b>5 refeições por dia</b>, com proteína e gordura boa em todas: é o jeito de comer que a Sandra aprendeu com o Dr. Jaime Brugos e aplica em si mesma. <small>Isodieta, Dr. Jaime Brugos</small></div>
+
+      <div class="guarantee">
+        <div class="badge">7<small>dias</small></div>
+        <div><b>Garantia incondicional de 7 dias</b><p>Leia, aplique e veja como o seu corpo responde. Se não fizer sentido pra você, peça o reembolso em até 7 dias e devolvemos 100% do valor, sem perguntas.</p></div>
+      </div>
+      <a class="btn cta checkout" href="#">Quero começar hoje</a>
+
+      <h2 class="sec">Perguntas frequentes</h2>
+      <div class="faq">
+        <details><summary>Preciso passar fome?</summary><p>Não. São 5 refeições por dia, com comida de verdade.</p></details>
+        <details><summary>Serve pra quem tem mais de 50?</summary><p>Sim. A Sandra tem 52 anos e vive assim.</p></details>
+        <details><summary>Como eu recebo?</summary><p>Logo depois da confirmação do pagamento, o acesso chega no e-mail que você informar no checkout.</p></details>
+        <details><summary>É assinatura? Vou pagar todo mês?</summary><p>Não. É pagamento único, sem mensalidade.</p></details>
+        <details><summary>Substitui o acompanhamento do meu médico?</summary><p>Não. A cartilha é um complemento pelo prato. Não pare nenhum tratamento sem falar com o seu médico.</p></details>
+        <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia. Se não fizer sentido pra você, devolvemos 100% do valor.</p></details>
+      </div>
+      <a class="btn cta checkout" href="#">Quero a minha cartilha</a>
+      <p class="foot">Você pode eliminar até 4kg em 7 dias*. *Resultado varia de corpo pra corpo. Não substitui acompanhamento médico.</p>
+    </div>
+  </div>
+</div></section>
+</main>
+
+<script>
+(function(){
+  // ===== CONFIGURAÇÃO =====
+  // "grupo" até 10/11 (Desafio gratuito); "cartilha" a partir de 11/11. A URL também troca: ?modo=grupo ou ?modo=cartilha
+  var MODO = "grupo";
+  var GRUPO = "https://chat.whatsapp.com/EvT7Og6h7lpH79JcvioS1U";
+  var CHECKOUT = "https://pay.kiwify.com.br/In45IRr";
+  var VSL_CARTILHA = "";      // ex.: "video/cartilha.mp4"; vazio = a oferta aparece direto
+  var PITCH_GRUPO = 25;       // segundo do vídeo em que aparece o botão do grupo
+  var PITCH_CARTILHA = 60;    // segundo do vídeo de venda em que aparece a oferta
+
+  var q = new URLSearchParams(location.search);
+  if (q.get("modo") === "grupo" || q.get("modo") === "cartilha") MODO = q.get("modo");
+  // repassa utm_* e fbclid para o checkout
+  var pass = new URLSearchParams();
+  q.forEach(function(v,k){ if (k.indexOf("utm_") === 0 || k === "fbclid") pass.set(k,v) });
+  if (!pass.has("utm_source")) pass.set("utm_source","quiz");
+  var ck = CHECKOUT + "?" + pass.toString();
+  [].forEach.call(document.querySelectorAll(".checkout"), function(a){ a.href = ck });
+  document.getElementById("cta-grupo").href = GRUPO;
+
+  var A = {};
+  function $(s){ return document.querySelector(s) }
+  var screens = [].slice.call(document.querySelectorAll("[data-step]"));
+  var questions = screens.filter(function(s){ return s.dataset.step.indexOf("q_") === 0 });
+  function show(step){
+    screens.forEach(function(s){ s.classList.toggle("on", s.dataset.step === step) });
+    var qi = questions.findIndex(function(s){ return s.dataset.step === step });
+    $("#head").classList.toggle("on", qi > -1 || step.indexOf("p_") === 0);
+    if (qi > -1) {
+      $("#q-count").textContent = "Pergunta " + (qi+1) + " de " + questions.length;
+      $("#q-bar").style.width = (qi / questions.length * 100) + "%";
+    }
+    window.scrollTo(0,0);
+  }
+  function track(ev, params, custom){ try{ fbq(custom ? "trackCustom" : "track", ev, params || {}) }catch(e){} }
+
+  var flow = screens.slice(0, screens.findIndex(function(s){ return s.dataset.step === "carregando" }) + 1);
+  function next(sec){
+    if (sec === questions[0]) track("QuizInicio", {modo: MODO}, true);
+    var qi = questions.indexOf(sec);
+    if (qi > -1) track("QuizPergunta", {numero: qi + 1}, true);
+    var step = flow[flow.indexOf(sec) + 1].dataset.step;
+    if (step === "carregando") loading(); else show(step);
+  }
+  [].forEach.call(document.querySelectorAll(".pass .btn"), function(b){
+    b.addEventListener("click", function(){ next(b.closest("[data-step]")) });
+  });
+  questions.forEach(function(sec){
+    var id = sec.dataset.step.slice(2), multi = !!sec.querySelector(".opts.multi"), go = sec.querySelector(".next");
+    var opts = [].slice.call(sec.querySelectorAll(".opt"));
+    opts.forEach(function(b){
+      b.addEventListener("click", function(){
+        var t = b.dataset.label;
+        if (!multi) {
+          opts.forEach(function(o){ o.classList.toggle("sel", o === b) });
+          A[id] = t; setTimeout(function(){ next(sec) }, 220);
+          return;
+        }
+        var arr = A[id] || [];
+        if (t === "Nada ainda") arr = arr.indexOf(t) > -1 ? [] : [t];
+        else { arr = arr.filter(function(x){ return x !== "Nada ainda" }); arr = arr.indexOf(t) > -1 ? arr.filter(function(x){ return x !== t }) : arr.concat(t); }
+        A[id] = arr;
+        opts.forEach(function(o){ o.classList.toggle("sel", arr.indexOf(o.dataset.label) > -1) });
+        go.disabled = !arr.length;
+      });
+    });
+    if (go) go.addEventListener("click", function(){ next(sec) });
+  });
+
+  function loading(){
+    show("carregando");
+    var li = document.querySelectorAll(".steps li");
+    li.forEach(function(el,k){ setTimeout(function(){ el.classList.add("done") }, 700 + k*800) });
+    setTimeout(result, 3300);
+  }
+
+  function result(){
+    // nível: frequência + sinais no corpo + café da manhã + se a dieta não resolveu + idade
+    var lvl = {"Quase todo dia":3,"Algumas vezes por semana":2,"Só depois de certas comidas":1.5,"Raramente":1}[A.freq] || 2;
+    lvl += Math.min((A.corpo || []).length, 4) * 0.5;
+    lvl += A.cafe && A.cafe !== "Ovos e proteína" ? 1 : 0;
+    lvl += A.efeito && A.efeito !== "Funciona bem" ? 1 : 0;
+    lvl += {"40 a 49":0.5,"50 a 59":1,"60 ou mais":1}[A.idade] || 0;
+    var pos = Math.max(30, Math.min(92, lvl / 8 * 100));
+    var nivel = pos >= 75 ? "muito alto" : pos >= 55 ? "alto" : "moderado";
+    $("#r-title").innerHTML = "O seu nível de inflamação está <em>" + nivel + "</em>";
+    $("#r-freq").textContent = A.freq || "-";
+    $("#r-corpo").textContent = (A.corpo || []).join(", ") || "-";
+    $("#r-cafe").textContent = A.cafe || "-";
+    $("#r-tentou").textContent = (A.tentou || []).join(", ") || "-";
+    var tentou = (A.tentou || []).filter(function(x){ return x !== "Nada ainda" });
+    var base = A.cafe && A.cafe !== "Ovos e proteína"
+      ? "O seu dia já começa inflamando: " + A.cafe.toLowerCase() + " no café da manhã faz o corpo pedir doce e inchar até a noite. "
+      : "Você já começa o dia bem, mas o resto do prato ainda está inflamando. ";
+    var lista = tentou.length > 1 ? tentou.slice(0,-1).join(", ") + " e " + tentou[tentou.length-1] : tentou.join("");
+    $("#r-explain").textContent = base + (tentou.length
+      ? "Por isso " + lista.toLowerCase() + (tentou.length > 1 ? " não resolveram" : " não resolveu") + ": o problema não é força de vontade, é o que está no prato."
+      : "Não é a idade: é o que o corpo recebe todos os dias. E isso se resolve no prato, sem passar fome.");
+    show("resultado");
+    setTimeout(function(){ $("#r-dot").style.left = pos + "%" }, 150);
+    track("QuizConcluido", {nivel: Math.round(pos), idade: A.idade, cafe: A.cafe, modo: MODO}, true);
+  }
+
+  function pitch(video, el, at){
+    if (!video.getAttribute("src")) { el.classList.add("on"); return }
+    var shown = false;
+    function on(){ if (!shown) { shown = true; el.classList.add("on") } }
+    video.addEventListener("timeupdate", function(){ if (video.currentTime >= at) on() });
+    video.addEventListener("ended", on);
+  }
+  var vGrupo = $("#v-grupo"), vCart = $("#v-cartilha");
+  if (VSL_CARTILHA) vCart.src = VSL_CARTILHA; else { $("#player-cartilha").hidden = true; $("#som-cartilha").hidden = true }
+  pitch(vGrupo, $("#pitch-grupo"), PITCH_GRUPO);
+  pitch(vCart, $("#pitch-cartilha"), PITCH_CARTILHA);
+
+  $("#unlock").onclick = function(){
+    show(MODO);
+    var v = MODO === "grupo" ? vGrupo : vCart;
+    if (v.getAttribute("src")) { var p = v.play(); if (p && p.catch) p.catch(function(){}) }
+    track("ViewContent", {content_name: MODO === "grupo" ? "Video Desafio" : "Oferta Cartilha"});
+  };
+  $("#cta-grupo").addEventListener("click", function(){ track("Lead", {content_name: "grupo_desafio_quiz"}) });
+  [].forEach.call(document.querySelectorAll(".checkout"), function(a){
+    a.addEventListener("click", function(){ track("InitiateCheckout", {value: 47, currency: "BRL", content_name: "cartilha_barriga_desinchada"}) });
+  });
+
+  show("q_sabia");
+})();
+</script>
+</body>
+</html>
