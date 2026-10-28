@@ -35,6 +35,16 @@
   .hint{color:var(--muted);font-size:15px;margin-bottom:18px}
   h1.headline{font-size:30px;margin-bottom:16px}
   h1.headline span{color:var(--accent)}
+  /* 28/10 (Felipe, iPhone): na 1ª tela as respostas têm que aparecer sem rolar */
+  @media (max-width:520px){
+    #head{padding-top:12px}
+    .bar{margin-bottom:14px}
+    h1.headline{font-size:23px;margin-bottom:10px}
+    .hero-img{aspect-ratio:2.3/1;object-position:center 28%;margin-bottom:12px;border-radius:14px}
+    [data-step="q_sabia"] h2{font-size:19px}
+    [data-step="q_sabia"] .hint{font-size:14px;margin-bottom:12px}
+    [data-step="q_sabia"] .opt{padding:13px 14px;font-size:15px}
+  }
   .hero-img{display:block;width:100%;height:auto;aspect-ratio:1272/832;object-fit:cover;border-radius:16px;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
   .pass img{display:block;width:100%;height:auto;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.1)}
   .opts{display:flex;flex-direction:column;gap:10px}
