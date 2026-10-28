@@ -363,9 +363,9 @@
   var MODO = "grupo";
   var GRUPO = "https://chat.whatsapp.com/EvT7Og6h7lpH79JcvioS1U";
   var CHECKOUT = "https://pay.kiwify.com.br/In45IRr";
-  var VSL_CARTILHA = "";      // ex.: "video/cartilha.mp4"; vazio = a oferta aparece direto
+  var VSL_CARTILHA = "video/vsl_cartilha.mp4";  // vídeo de texto + voz de IA (quiz/vsl/gera_vsl.py); vazio = a oferta aparece direto
   var PITCH_GRUPO = 25;       // segundo do vídeo em que aparece o botão do grupo
-  var PITCH_CARTILHA = 60;    // segundo do vídeo de venda em que aparece a oferta
+  var PITCH_CARTILHA = 147;   // segundo em que a voz fala o preço (R$ 97 por R$ 47)
 
   var q = new URLSearchParams(location.search);
   if (q.get("modo") === "grupo" || q.get("modo") === "cartilha") MODO = q.get("modo");
@@ -469,7 +469,7 @@
     video.addEventListener("ended", on);
   }
   var vGrupo = $("#v-grupo"), vCart = $("#v-cartilha");
-  if (VSL_CARTILHA) vCart.src = VSL_CARTILHA; else { $("#player-cartilha").hidden = true; $("#som-cartilha").hidden = true }
+  if (VSL_CARTILHA) { vCart.src = VSL_CARTILHA; vCart.poster = "img/poster_cartilha.jpg" } else { $("#player-cartilha").hidden = true; $("#som-cartilha").hidden = true }
   pitch(vGrupo, $("#pitch-grupo"), PITCH_GRUPO);
   pitch(vCart, $("#pitch-cartilha"), PITCH_CARTILHA);
 
