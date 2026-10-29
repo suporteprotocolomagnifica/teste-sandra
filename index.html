@@ -94,6 +94,8 @@
   .player{position:relative}
   .player video{display:block;width:100%;height:auto;aspect-ratio:9/16;background:#000;cursor:pointer}
   .som{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);border:0;cursor:pointer;padding:0}
+  .som{transition:opacity .6s}
+  .som.sai{opacity:0;pointer-events:none}
   .som span{background:var(--cta);color:#fff;font:800 17px Inter,system-ui,sans-serif;padding:16px 20px;border-radius:14px;text-align:center;line-height:1.3;box-shadow:0 10px 24px rgba(0,0,0,.35)}
   .som span small{display:block;font-weight:600;font-size:14px;opacity:.9}
   .show-pitch{display:none}
@@ -488,8 +490,11 @@
     var max = 0, btn = v.parentNode.querySelector(".som");
     v.addEventListener("timeupdate", function(){ if (!v.seeking && v.currentTime > max) max = v.currentTime });
     v.addEventListener("seeking", function(){ if (v.currentTime > max + 1) v.currentTime = max });
-    v.addEventListener("click", function(){ if (v.paused) v.play(); else v.pause() });
-    btn.addEventListener("click", function(){ v.muted = false; v.currentTime = 0; max = 0; v.play(); btn.hidden = true });
+    // 29/10 (Felipe): o aviso do som fica só ~10 s e some, pra imagem ficar limpa; tocar no vídeo mudo também liga o som
+    function comSom(){ v.muted = false; v.currentTime = 0; max = 0; v.play(); btn.hidden = true }
+    v.addEventListener("play", function(){ if (v.muted && !btn.hidden) setTimeout(function(){ if (v.muted) btn.classList.add("sai") }, 10000) }, {once: true});
+    v.addEventListener("click", function(){ if (v.muted) comSom(); else if (v.paused) v.play(); else v.pause() });
+    btn.addEventListener("click", comSom);
   });
 
   $("#unlock").onclick = function(){
