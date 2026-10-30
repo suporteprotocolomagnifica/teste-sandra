@@ -68,6 +68,12 @@
   .btn.cta{background:var(--cta);box-shadow:0 10px 24px rgba(22,163,74,.3);animation:pulse 2s infinite}
   @keyframes pulse{50%{transform:scale(1.02)}}
   .note{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
+  .cad label{display:block;font-weight:600;font-size:14px;margin:12px 0 6px}
+  .cad input[type=text],.cad input[type=email],.cad input[type=tel]{width:100%;border:2px solid var(--line);border-radius:12px;padding:14px;font:16px Inter,system-ui,sans-serif;background:#fff;color:var(--ink)}
+  .cad input:focus{outline:none;border-color:var(--accent)}
+  .cad .lgpd{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:13px;color:var(--muted)}
+  .cad .lgpd input{margin-top:3px;width:18px;height:18px;flex:none}
+  .cad .erro{color:#B91C1C;font-size:14px;margin-top:10px;min-height:1em}
   .loading{text-align:center;padding-top:40px}
   .spinner{width:64px;height:64px;border-radius:50%;border:6px solid var(--line);border-top-color:var(--accent);margin:0 auto 24px;animation:spin 1s linear infinite}
   @keyframes spin{to{transform:rotate(360deg)}}
@@ -245,6 +251,24 @@
   </div>
 </div></section>
 
+<!-- 30/10: cadastro antes do resultado (campanha F otimiza por esse cadastro = Lead) -->
+<section class="screen" data-step="cadastro"><div class="wrap cad">
+  <span class="tag">Seu resultado está pronto</span>
+  <h2>Pra onde eu mando o seu resultado e as aulas do Desafio gratuito?</h2>
+  <p class="hint">Você também recebe o convite do Desafio Desinflamação (9 a 15/11, online e gratuito).</p>
+  <form id="f-cad" novalidate>
+    <label for="c-nome">Seu primeiro nome</label>
+    <input type="text" id="c-nome" autocomplete="given-name" required>
+    <label for="c-zap">Seu WhatsApp (com DDD)</label>
+    <input type="tel" id="c-zap" autocomplete="tel" inputmode="tel" placeholder="(11) 91234-5678" required>
+    <label for="c-email">Seu melhor e-mail</label>
+    <input type="email" id="c-email" autocomplete="email" inputmode="email" required>
+    <div class="lgpd"><input type="checkbox" id="c-lgpd" required><label for="c-lgpd" style="margin:0;font-weight:400">Aceito receber o resultado, as aulas e os avisos por WhatsApp e e-mail. Posso sair quando quiser.</label></div>
+    <button class="btn cta" type="submit" id="c-enviar">Ver o meu resultado</button>
+    <p class="erro" id="c-erro" role="alert"></p>
+  </form>
+</div></section>
+
 <section class="screen" data-step="carregando"><div class="wrap loading">
   <div class="spinner"></div>
   <h2>Montando o seu resultado...</h2>
@@ -374,6 +398,7 @@
   // "grupo" até 10/11 (Desafio gratuito); "cartilha" a partir de 11/11. A URL também troca: ?modo=grupo ou ?modo=cartilha
   var MODO = "grupo";
   var GRUPO = "https://chat.whatsapp.com/EvT7Og6h7lpH79JcvioS1U";
+  var PLANILHA = "";  // link do App da Web da planilha do suporte (termina em /exec)
   var CHECKOUT = "https://pay.kiwify.com.br/In45IRr";
   var VSL_CARTILHA = "video/vsl_cartilha.mp4";  // vídeo de texto + voz de IA (quiz/vsl/gera_vsl.py); vazio = a oferta aparece direto
   var PITCH_GRUPO = 25;       // segundo do vídeo em que aparece o botão do grupo
@@ -413,6 +438,7 @@
     if (qi > -1) track("QuizPergunta", {numero: qi + 1}, true);
     var step = flow[flow.indexOf(sec) + 1].dataset.step;
     if (step === "carregando") loading(); else show(step);
+    if (step === "cadastro") track("QuizCadastroVisto", {}, true);
   }
   [].forEach.call(document.querySelectorAll(".pass .btn"), function(b){
     b.addEventListener("click", function(){ next(b.closest("[data-step]")) });
@@ -439,6 +465,23 @@
     if (go) go.addEventListener("click", function(){ next(sec) });
   });
 
+  document.getElementById("f-cad").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var nome = $("#c-nome").value.trim(), zap = $("#c-zap").value.replace(/\D/g, ""), email = $("#c-email").value.trim().toLowerCase(), erro = $("#c-erro");
+    if (nome.length < 2) { erro.textContent = "Escreva o seu nome."; return }
+    if (zap.length < 10 || zap.length > 13) { erro.textContent = "Confira o WhatsApp, com o DDD."; return }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { erro.textContent = "Confira o e-mail."; return }
+    if (!$("#c-lgpd").checked) { erro.textContent = "Marque a caixinha pra receber o resultado."; return }
+    erro.textContent = ""; $("#c-enviar").disabled = true;
+    A.nome = nome;
+    var dados = new URLSearchParams({nome: nome, whatsapp: zap, email: email, origem: "quiz", lgpd: "sim",
+      resultado: [A.freq, (A.corpo || []).join("/"), A.cafe, (A.tentou || []).join("/"), A.efeito, A.idade].join(" | "),
+      utm_source: q.get("utm_source") || "", utm_campaign: q.get("utm_campaign") || "", utm_content: q.get("utm_content") || ""});
+    if (PLANILHA) fetch(PLANILHA, {method: "POST", mode: "no-cors", body: dados}).catch(function(){});
+    track("Lead", {content_name: "cadastro_quiz", modo: MODO});
+    loading();
+  });
+
   function loading(){
     show("carregando");
     var li = document.querySelectorAll(".steps li");
@@ -455,7 +498,7 @@
     lvl += {"40 a 49":0.5,"50 a 59":1,"60 ou mais":1}[A.idade] || 0;
     var pos = Math.max(30, Math.min(92, lvl / 8 * 100));
     var nivel = pos >= 75 ? "muito alto" : pos >= 55 ? "alto" : "moderado";
-    $("#r-title").innerHTML = "O seu nível de inflamação está <em>" + nivel + "</em>";
+    $("#r-title").innerHTML = (A.nome ? A.nome.split(" ")[0] + ", o" : "O") + " seu nível de inflamação está <em>" + nivel + "</em>";
     $("#r-freq").textContent = A.freq || "-";
     $("#r-corpo").textContent = (A.corpo || []).join(", ") || "-";
     $("#r-cafe").textContent = A.cafe || "-";
@@ -503,7 +546,7 @@
     if (v.getAttribute("src")) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}) }
     track("ViewContent", {content_name: MODO === "grupo" ? "Video Desafio" : "Oferta Cartilha"});
   };
-  $("#cta-grupo").addEventListener("click", function(){ track("Lead", {content_name: "grupo_desafio_quiz"}) });
+  $("#cta-grupo").addEventListener("click", function(){ track("CliqueGrupo", {origem: "quiz"}, true) });
   [].forEach.call(document.querySelectorAll(".checkout"), function(a){
     a.addEventListener("click", function(){ track("InitiateCheckout", {value: 47, currency: "BRL", content_name: "cartilha_barriga_desinchada"}) });
   });
