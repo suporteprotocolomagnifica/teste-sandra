@@ -398,7 +398,7 @@
   // "grupo" até 10/11 (Desafio gratuito); "cartilha" a partir de 11/11. A URL também troca: ?modo=grupo ou ?modo=cartilha
   var MODO = "grupo";
   var GRUPO = "https://chat.whatsapp.com/EvT7Og6h7lpH79JcvioS1U";
-  var PLANILHA = "";  // link do App da Web da planilha do suporte (termina em /exec)
+  var PLANILHA = "https://script.google.com/macros/s/AKfycbwjE2EuYNaaxorpJ33OG6mLf3MB9rNVd8jMGzfsgg2fXY9DdBsbzVWrLcByae7ArcIWzA/exec";  // link do App da Web da planilha do suporte (termina em /exec)
   var CHECKOUT = "https://pay.kiwify.com.br/In45IRr";
   var VSL_CARTILHA = "video/vsl_cartilha.mp4";  // vídeo de texto + voz de IA (quiz/vsl/gera_vsl.py); vazio = a oferta aparece direto
   var PITCH_GRUPO = 25;       // segundo do vídeo em que aparece o botão do grupo
@@ -540,7 +540,10 @@
     btn.addEventListener("click", comSom);
   });
 
+  // 30/10 (Felipe): na captação (modo grupo) o resultado leva direto pro grupo; vídeo de vendas é só pra cartilha
+  if (MODO === "grupo") { $("#unlock").textContent = "Entrar no grupo do Desafio gratuito"; $("#unlock").insertAdjacentHTML("afterend", '<p class="note">As aulas e o cardápio de cada dia chegam no grupo do WhatsApp, a partir de 09/11 às 7h.</p>') }
   $("#unlock").onclick = function(){
+    if (MODO === "grupo") { track("CliqueGrupo", {origem: "quiz"}, true); location.href = GRUPO; return }
     show(MODO);
     var v = MODO === "grupo" ? vGrupo : vCart;
     if (v.getAttribute("src")) { v.muted = true; var p = v.play(); if (p && p.catch) p.catch(function(){}) }
