@@ -396,7 +396,7 @@
 (function(){
   // ===== CONFIGURAÇÃO =====
   // "grupo" até 10/11 (Desafio gratuito); "cartilha" a partir de 11/11. A URL também troca: ?modo=grupo ou ?modo=cartilha
-  var MODO = "grupo";
+  var MODO = Date.now() >= Date.parse("2026-11-11T00:00:00-03:00") ? "cartilha" : "grupo";
   var GRUPO = "https://chat.whatsapp.com/EvT7Og6h7lpH79JcvioS1U";
   var PLANILHA = "https://script.google.com/macros/s/AKfycbwjE2EuYNaaxorpJ33OG6mLf3MB9rNVd8jMGzfsgg2fXY9DdBsbzVWrLcByae7ArcIWzA/exec";  // link do App da Web da planilha do suporte (termina em /exec)
   var CHECKOUT = "https://pay.kiwify.com.br/In45IRr";
