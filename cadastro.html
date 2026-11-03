@@ -1,6 +1,19 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
+<script>
+/* 03/11: o link da bio e do YouTube leva pra cá; a página acompanha a fase sozinha */
+(function(){
+  var t = Date.now(), q = location.search.replace("?", "&"), d;
+  function em(x){ return Date.parse(x + "-03:00"); }
+  if (new URLSearchParams(location.search).get("fase") === "grupo") return;
+  if (t >= em("2026-11-27T00:00:00") || (t >= em("2026-11-11T00:00:00") && t < em("2026-11-16T07:00:00"))) d = "./?modo=cartilha" + q;
+  else if (t >= em("2026-11-24T00:00:00")) d = "https://pay.kiwify.com.br/S1XvQS9";
+  else if (t >= em("2026-11-16T07:00:00")) d = "https://pay.kiwify.com.br/AJAyPPI";
+  if (d) location.replace(d);
+})();
+</script>
+
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Desafio Desinflamação gratuito · Sandra Guedes</title>
