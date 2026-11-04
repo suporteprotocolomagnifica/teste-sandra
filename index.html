@@ -261,9 +261,7 @@
     <input type="text" id="c-nome" autocomplete="given-name" required>
     <label for="c-zap">Seu WhatsApp (com DDD)</label>
     <input type="tel" id="c-zap" autocomplete="tel" inputmode="tel" placeholder="(11) 91234-5678" required>
-    <label for="c-email">Seu melhor e-mail</label>
-    <input type="email" id="c-email" autocomplete="email" inputmode="email" required>
-    <div class="lgpd"><input type="checkbox" id="c-lgpd" required><label for="c-lgpd" style="margin:0;font-weight:400">Aceito receber o resultado, as aulas e os avisos por WhatsApp e e-mail. Posso sair quando quiser.</label></div>
+    <div class="lgpd"><input type="checkbox" id="c-lgpd" required><label for="c-lgpd" style="margin:0;font-weight:400">Aceito receber o resultado, as aulas e os avisos por WhatsApp. Posso sair quando quiser.</label></div>
     <button class="btn cta" type="submit" id="c-enviar">Ver o meu resultado</button>
     <p class="erro" id="c-erro" role="alert"></p>
   </form>
@@ -473,10 +471,10 @@
 
   document.getElementById("f-cad").addEventListener("submit", function(ev){
     ev.preventDefault();
-    var nome = $("#c-nome").value.trim(), zap = $("#c-zap").value.replace(/\D/g, ""), email = $("#c-email").value.trim().toLowerCase(), erro = $("#c-erro");
+    var nome = $("#c-nome").value.trim(), zap = $("#c-zap").value.replace(/\D/g, ""), email = "", erro = $("#c-erro");
     if (nome.length < 2) { erro.textContent = "Escreva o seu nome."; return }
     if (zap.length < 10 || zap.length > 13) { erro.textContent = "Confira o WhatsApp, com o DDD."; return }
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { erro.textContent = "Confira o e-mail."; return }
+    /* 04/11: sem campo de e-mail nesta captação, para baixar o custo; volta na próxima */
     if (!$("#c-lgpd").checked) { erro.textContent = "Marque a caixinha pra receber o resultado."; return }
     erro.textContent = ""; $("#c-enviar").disabled = true;
     A.nome = nome;
