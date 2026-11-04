@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Checkpoint · Protocolo Magnífica</title>
+<!-- Área da aluna, com medidas e fotos do corpo: de propósito sem Pixel e sem GTM. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#F7F3EE;--card:#FFFFFF;--ink:#231C17;--muted:#655A51;--line:#E7DED3;--accent:#9A5B13;--accent-soft:#F6EAD7;--cta:#16A34A;--erro:#B91C1C}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-serif;line-height:1.45;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:520px;margin:0 auto;padding:18px 16px 40px}
+  .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);font-weight:700;font-size:13px;padding:6px 12px;border-radius:99px;margin-bottom:12px}
+  h1{font-size:24px;line-height:1.16;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 10px 30px rgba(0,0,0,.05)}
+  label{display:block;font-weight:600;font-size:14px;margin:12px 0 5px}
+  label small{font-weight:400;color:var(--muted)}
+  input[type=text],input[type=tel]{width:100%;border:2px solid var(--line);border-radius:12px;padding:12px 14px;font:16px Inter,system-ui,sans-serif;background:#fff;color:var(--ink)}
+  input:focus{outline:none;border-color:var(--accent)}
+  input[type=file]{width:100%;font:14px Inter,system-ui,sans-serif;padding:10px;border:2px dashed var(--line);border-radius:12px;background:#fff}
+  .tres{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .previa{display:block;margin-top:8px;max-height:140px;border-radius:10px}
+  .lgpd{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:13px;color:var(--muted)}
+  .lgpd input{margin-top:3px;width:18px;height:18px;flex:none}
+  .lgpd label{margin:0;font-weight:400;font-size:13px}
+  .btn{display:block;width:100%;border:0;border-radius:14px;padding:18px;font:800 18px Inter,system-ui,sans-serif;color:#fff;background:var(--cta);cursor:pointer;margin-top:16px}
+  .btn:disabled{opacity:.6}
+  .btn:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+  .erro{color:var(--erro);font-size:14px;margin-top:10px;min-height:1em}
+  .nota{font-size:12px;color:var(--muted);text-align:center;margin-top:12px}
+  .ok{text-align:center}
+  .ok h2{font-size:24px;margin:6px 0 10px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <section id="tela-form">
+    <span class="tag">Mentoria Protocolo Magnífica</span>
+    <h1>Seu checkpoint</h1>
+    <p class="sub">Leva 2 minutos. Tire as fotos no mesmo lugar, com a mesma roupa, para comparar melhor com as próximas.</p>
+    <form class="card" id="form" novalidate>
+      <label for="nome" style="margin-top:0">Seu nome</label>
+      <input type="text" id="nome" autocomplete="name" required>
+      <label for="whatsapp">Seu WhatsApp (com DDD)</label>
+      <input type="tel" id="whatsapp" autocomplete="tel" inputmode="tel" placeholder="(11) 91234-5678" required>
+      <div class="tres">
+        <div><label for="peso">Peso (kg)</label><input type="text" id="peso" inputmode="decimal" required></div>
+        <div><label for="cintura">Cintura (cm)</label><input type="text" id="cintura" inputmode="decimal" required></div>
+        <div><label for="quadril">Quadril (cm)</label><input type="text" id="quadril" inputmode="decimal" required></div>
+      </div>
+      <label for="frente">Foto de frente</label>
+      <input type="file" id="frente" accept="image/*" required>
+      <img class="previa" id="p-frente" alt="Prévia da foto de frente" hidden>
+      <label for="lado">Foto de lado</label>
+      <input type="file" id="lado" accept="image/*" required>
+      <img class="previa" id="p-lado" alt="Prévia da foto de lado" hidden>
+      <label for="roupa">Foto com uma roupa de referência <small>(opcional)</small></label>
+      <input type="file" id="roupa" accept="image/*">
+      <img class="previa" id="p-roupa" alt="Prévia da foto com a roupa" hidden>
+      <div class="lgpd"><input type="checkbox" id="aceite" required><label for="aceite">Autorizo a equipe da Sandra a guardar as minhas medidas e fotos para acompanhar o meu resultado e a minha garantia. Elas só são divulgadas com a minha autorização.</label></div>
+      <button class="btn" type="submit" id="enviar">Enviar meu checkpoint</button>
+      <p class="erro" id="erro" role="alert"></p>
+      <p class="nota">Dúvidas: WhatsApp do suporte, (11) 94544-7627.</p>
+    </form>
+  </section>
+  <section id="tela-ok" class="card ok" hidden>
+    <h2>Checkpoint recebido!</h2>
+    <p>Está tudo certo. A equipe analisa, e você não precisa esperar uma resposta. Siga o seu plano.</p>
+  </section>
+</main>
+<script>
+(function(){
+  // ===== CONFIGURAÇÃO =====
+  var DESTINO = "";  // link do App da Web do checkpoint (termina em /exec)
+  var MAX = 1400;
+
+  function $(i){ return document.getElementById(i) }
+
+  ["frente", "lado", "roupa"].forEach(function(k){
+    $(k).addEventListener("change", function(){
+      var f = this.files[0], p = $("p-" + k);
+      if (f) { p.src = URL.createObjectURL(f); p.hidden = false } else { p.hidden = true }
+    });
+  });
+
+  function reduz(file){
+    return new Promise(function(ok, falha){
+      if (!file) return ok("");
+      var u = URL.createObjectURL(file), i = new Image();
+      i.onload = function(){
+        var k = Math.min(1, MAX / Math.max(i.width, i.height)), c = document.createElement("canvas");
+        c.width = Math.round(i.width * k); c.height = Math.round(i.height * k);
+        c.getContext("2d").drawImage(i, 0, 0, c.width, c.height);
+        URL.revokeObjectURL(u);
+        ok(c.toDataURL("image/jpeg", 0.8).split(",")[1]);
+      };
+      i.onerror = falha;
+      i.src = u;
+    });
+  }
+
+  $("form").addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var nome = $("nome").value.trim(), zap = $("whatsapp").value.replace(/\D/g, ""), erro = $("erro"), b = $("enviar");
+    var num = /^\d{1,3}([.,]\d{1,2})?$/;
+    if (nome.length < 2) { erro.textContent = "Escreva o seu nome."; return }
+    if (zap.length < 10 || zap.length > 13) { erro.textContent = "Confira o WhatsApp, com o DDD."; return }
+    if (!num.test($("peso").value.trim())) { erro.textContent = "Confira o peso, só com números."; return }
+    if (!num.test($("cintura").value.trim())) { erro.textContent = "Confira a cintura, só com números."; return }
+    if (!num.test($("quadril").value.trim())) { erro.textContent = "Confira o quadril, só com números."; return }
+    if (!$("frente").files[0]) { erro.textContent = "Coloque a foto de frente."; return }
+    if (!$("lado").files[0]) { erro.textContent = "Coloque a foto de lado."; return }
+    if (!$("aceite").checked) { erro.textContent = "Marque a caixinha para enviar."; return }
+    if (!DESTINO) { erro.textContent = "O envio ainda não está ligado. Chame o suporte no WhatsApp."; return }
+    erro.textContent = ""; b.disabled = true; b.textContent = "Enviando as fotos...";
+    Promise.all([reduz($("frente").files[0]), reduz($("lado").files[0]), reduz($("roupa").files[0])]).then(function(f){
+      var dados = new URLSearchParams({nome: nome, whatsapp: zap, peso: $("peso").value.trim(), cintura: $("cintura").value.trim(), quadril: $("quadril").value.trim(),
+        frente: f[0], lado: f[1], roupa: f[2], aceite: "sim"});
+      return fetch(DESTINO, {method: "POST", mode: "no-cors", body: dados});
+    }).then(function(){
+      $("tela-form").hidden = true; $("tela-ok").hidden = false; window.scrollTo(0, 0);
+    }).catch(function(){
+      erro.textContent = "Não consegui enviar. Confira a internet e tente de novo."; b.disabled = false; b.textContent = "Enviar meu checkpoint";
+    });
+  });
+})();
+</script>
+</body>
+</html>
