@@ -7,7 +7,9 @@
   var t = Date.now(), q = location.search.replace("?", "&"), d;
   function em(x){ return Date.parse(x + "-03:00"); }
   if (new URLSearchParams(location.search).get("fase") === "grupo") return;
-  if (t >= em("2026-11-27T00:00:00") || (t >= em("2026-11-11T00:00:00") && t < em("2026-11-16T07:00:00"))) d = "./?modo=cartilha" + q;
+  // 10/11 Felipe: de 11/11 até as vagas abrirem (16/11 7h) a bio leva à FICHA DE INTERESSE da mentoria, não à cartilha
+  if (t >= em("2026-11-27T00:00:00")) d = "./?modo=cartilha" + q;
+  else if (t >= em("2026-11-11T00:00:00") && t < em("2026-11-16T07:00:00")) d = "https://forms.gle/j3eoFL7i8RPUhyff9";
   else if (t >= em("2026-11-24T09:00:00")) d = "https://pay.kiwify.com.br/S1XvQS9";
   else if (t >= em("2026-11-16T07:00:00")) d = "https://pay.kiwify.com.br/AJAyPPI";
   if (d) location.replace(d);
