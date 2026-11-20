@@ -8,7 +8,8 @@
   function em(x){ return Date.parse(x + "-03:00"); }
   if (new URLSearchParams(location.search).get("fase") === "grupo") return;
   // 10/11 Felipe: de 11/11 até as vagas abrirem (16/11 7h) a bio leva à FICHA DE INTERESSE da mentoria, não à cartilha
-  if (t >= em("2026-11-27T00:00:00")) d = "./?modo=cartilha" + q;
+  // 20/11 Felipe: carrinho da mentoria fechou, bio leva à cartilha já
+  if (t >= em("2026-11-20T00:00:00")) d = "./?modo=cartilha" + q;
   else if (t >= em("2026-11-11T00:00:00") && t < em("2026-11-16T07:00:00")) d = "https://forms.gle/j3eoFL7i8RPUhyff9";
   // 17/11 Felipe: Black cancelada; segue a mentoria até 27/11
   else if (t >= em("2026-11-17T00:00:00")) d = "https://pay.kiwify.com.br/AJAyPPI";
